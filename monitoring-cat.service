@@ -1,0 +1,10 @@
+[Unit]
+Description=Monitor Test Process
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/ragegen/test-script-task/monitoring-cat.sh
+User=root
+[Install]
+WantedBy=multi-user.target
