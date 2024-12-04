@@ -22,5 +22,22 @@
 
 Поэтому обратимся к другому API в данном случае к `"https://catfact.ninja/fact"`, чтобы получить случайный факт о кошке :)
 
+## Демо
+
+Проверка статуса процесса:
+
+![status](https://github.com/user-attachments/assets/de2bec92-02f7-4e27-bc5a-8e6e35f81a4b)
+
+Проверяем, что файл пуст:
+
+![file-empty](https://github.com/user-attachments/assets/02449e5e-e19d-4d8b-8acf-208db406e09e)
+
+Запускаем btop и ждем минуту для результата:
+
+![btop and check](https://github.com/user-attachments/assets/a1726ac0-5ac0-4946-ae5d-d7485b794ed8)
+
+Ждем еще какое-то время и снова проверяем файл (каждую минуту добавляется запись):
+
+![check file again](https://github.com/user-attachments/assets/9fc6972d-511c-44b6-9a1e-572f5b159244)
 
 ### Тестирование и написание кода проводились на Windows 11 в среде WSL2
