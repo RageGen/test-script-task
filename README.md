@@ -37,7 +37,7 @@
 
 Ждем еще какое-то время и снова проверяем файл (каждую минуту добавляется запись):
 
-![test](https://github.com/user-attachments/assets/4adb33b8-5a69-45d4-a601-8108fa79cb56)
+![test_cat](https://github.com/user-attachments/assets/65e4c492-1ec2-4d80-b676-dc60c78ce66a)
 
 Попробуем перезапустить процесс и увидим логи:
 
