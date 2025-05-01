@@ -1,37 +1,40 @@
 #!/bin/bash
 
-PROCESS_NAME="btop"
-PID_FILE="/home/ragegen/test-script-task/test_pid.txt"
 LOG_FILE="/var/log/monitoring.log"
 API_URL="https://catfact.ninja/fact"
+PID_FILE="/home/ragegen/test/self_monitor.pid"
 CURL_TIMEOUT=5
 
-log_message() {
-    echo "$(date) - $1" >> "$LOG_FILE"
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
 }
 
-PROCESS_PID=$(pgrep -x "$PROCESS_NAME")
-
-if [ -z "$PROCESS_PID" ]; then
-    exit 0
-fi
-
-if [ -f "$PID_FILE" ]; then
-    LAST_PID=$(cat "$PID_FILE")
-
-    if [ "$PROCESS_PID" != "$LAST_PID" ]; then
-        log_message "Процесс $PROCESS_NAME был перезапущен. Новый PID: $PROCESS_PID"
+check_restart() {
+    if [ -f "$PID_FILE" ]; then
+        local old_pid=$(cat "$PID_FILE")
+        if [ "$old_pid" != "$$" ] && ps -p "$old_pid" >/dev/null 2>&1; then
+            log "Обнаружен предыдущий процесс (PID: $old_pid)"
+        elif [ "$old_pid" != "$$" ]; then
+            log "Перезапуск. Новый PID: $$"
+        fi
     fi
-fi
+    echo $$ > "$PID_FILE"
+}
 
-echo "$PROCESS_PID" > "$PID_FILE"
+main() {
+    check_restart
+    
+    response=$(curl -sS --max-time "$CURL_TIMEOUT" "$API_URL" 2>&1)
+    
+    if [ $? -eq 0 ]; then
+        fact=$(echo "$response" | jq -r '.fact' 2>/dev/null)
+        [ -n "$fact" ] && log "Факт: $fact" || log "Ошибка парсинга"
+    else
+        log "Ошибка запроса: ${response:-Timeout}"
+    fi
+}
 
-RESPONSE=$(curl --max-time $CURL_TIMEOUT -s $API_URL)
-
-if [ $? -eq 0 ]; then
-    FACT=$(echo $RESPONSE | jq -r '.fact')
-
-    log_message "Получен факт о кошках: $FACT"
-else
-    log_message "Ошибка при запросе к API или сервер недоступен."
-fi
+while true; do
+    main
+    sleep 60
+done
