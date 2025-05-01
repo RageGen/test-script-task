@@ -16,7 +16,7 @@
 
 `2025-05-01 23:36:49 - Факт: A cat's normal pulse is 140-240 beats per minute, with an average of 195.`
 
-'2025-05-01 23:49:46 - Ошибка запроса: curl: (28) Resolving timed out after 5001 milliseconds'
+`2025-05-01 23:49:46 - Ошибка запроса: curl: (28) Resolving timed out after 5001 milliseconds`
 
 ## Почему я обращаюсь к другому сайту?
 
