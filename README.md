@@ -1,21 +1,23 @@
 # Мониторинг процесса
 
-Этот проект включает скрипт на bash, который предназначен для мониторинга процесса `test` в Linux. Скрипт выполняет различные задачи в зависимости от состояния процесса и может быть настроен для автоматического запуска при старте системы и выполнения по расписанию с помощью `systemd`.
+Этот проект включает скрипт на bash, который предназначен для получения информации от API каждую минуту. Скрипт выполняет различные задачи в зависимости от состояния процесса и может быть настроен для автоматического запуска при старте системы.
 
 
 ## Скрипт: `monitoring-cat.sh`
 
 ### Описание
 Этот скрипт:
-- Проверяет, запущен ли процесс `test`.
 - Получает случайный факт о кошках с `https://catfact.ninja/fact`.
 - Логирует факт или ошибки в файл `/var/log/monitoring.log`.
 - Отслеживает перезапуски процесса.
 
 ### Пример логов
-`Thu Dec  5 00:00:07 MSK 2024 - Процесс btop был перезапущен. Новый PID: 1040`
+`2025-05-01 23:34:57 - Перезапуск. Новый PID: 2398`
 
-`Thu Dec  5 00:04:59 MSK 2024 - Получен факт о кошках: A cat named Dusty, aged 1 7, living in Bonham, Texas, USA, gave birth to her 420th kitten on June 23, 1952.`
+`2025-05-01 23:36:49 - Факт: A cat's normal pulse is 140-240 beats per minute, with an average of 195.`
+
+'2025-05-01 23:49:46 - Ошибка запроса: curl: (28) Resolving timed out after 5001 milliseconds'
+
 ## Почему я обращаюсь к другому сайту?
 
 Потому что `https://test.com/monitoring/test/api` не является валидным "сервером" и мы всегда будем видеть сообщение о том, что доступ получить не удалось.
@@ -26,18 +28,19 @@
 
 Проверка статуса процесса:
 
-![status](https://github.com/user-attachments/assets/de2bec92-02f7-4e27-bc5a-8e6e35f81a4b)
+![status](https://github.com/user-attachments/assets/b96ff6d3-e0b3-4171-b25e-646011921717)
 
 Проверяем, что файл пуст:
 
-![file-empty](https://github.com/user-attachments/assets/02449e5e-e19d-4d8b-8acf-208db406e09e)
+![empty](https://github.com/user-attachments/assets/aca2769d-1a7b-475f-8054-c1ea10c18a09)
 
-Запускаем btop и ждем минуту для результата:
-
-![btop and check](https://github.com/user-attachments/assets/a1726ac0-5ac0-4946-ae5d-d7485b794ed8)
 
 Ждем еще какое-то время и снова проверяем файл (каждую минуту добавляется запись):
 
-![check file again](https://github.com/user-attachments/assets/9fc6972d-511c-44b6-9a1e-572f5b159244)
+![test](https://github.com/user-attachments/assets/4adb33b8-5a69-45d4-a601-8108fa79cb56)
+
+Попробуем перезапустить процесс и увидим логи:
+
+![restart](https://github.com/user-attachments/assets/09bf4148-0060-4b3d-af14-2286c68f6d02)
 
 ### Тестирование и написание кода проводились на Windows 11 в среде WSL2
